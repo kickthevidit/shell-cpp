@@ -1,3 +1,10 @@
+/*
+TODOS:
+	- Add mkdir functionality
+	- Fix cd function
+	
+*/
+
 #include <iostream>
 #include <regex>
 #include <string>
@@ -9,8 +16,9 @@ using std::string;
 using std::vector;
 
 void shell_run() {
+	system("clear");
+	
 	bool status = true;
-
 	string line;
 
 	do {
