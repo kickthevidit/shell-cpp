@@ -1,6 +1,6 @@
 # C++ shell
 
-Writing a simple linux shell in C++. Full unix functionality has been added to this shell, meaning it can run all unix commands [here](https://man7.org/linux/man-pages/dir_section_2.html). It has integration with quotes, backslashes and semicolons for writing better commands. In the future, I want to add autofill functionality as well.
+Writing a linux shell in C++. Full unix functionality has been added to this shell, meaning it can run all unix commands [here](https://man7.org/linux/man-pages/dir_section_2.html). It has integration with quotes, backslashes and semicolons for writing better commands. In the future, I want to add autofill functionality as well.
 
 In order to run clone and run using your favorite c++ compiler. Here is how you run using Clang
 
