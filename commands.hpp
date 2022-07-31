@@ -12,13 +12,13 @@ using std::string;
 using std::map;
 using std::vector;
 
-void ExitShell(const string &command = string(), bool verbose = 0) {
+void ExitShell(const string &command = string(), bool verbose = 0, const string& error_message = string()) {
   if (verbose)
-    std::cout << "Command not found: " << command;
+    std::cout << "Error at Command: " << command << ((error_message == string()) ? "" : error_message);
   exit(EXIT_SUCCESS);
 }
 
-void ThrowError(const string& command) {
+void ThrowError(const string& command = string()) {
   std::cout << "Command not found: " << command << '\n';
 }
 
@@ -42,27 +42,31 @@ void clear(const vector<string>& words) {
   system("clear");
 }
 
-void pwd(const vector<string>& words) {
-  system("pwd");
-}
-
 void exit(const vector<string> &words) {
   ExitShell(string());
 }
 
 // TODO: make cd work;
 void cd(const vector<string>& words) {
-  string params = words.at(0);
+  string params = "";// = words.at(0);
   for (int i = 1; i < words.size(); ++i) {
-    params+= ' ' + words.at(i);
+    params+= words.at(i);
+    if (i != 1) params += ' ';
   }
-  // std::cout << params << '\n';
-  system(params.c_str());
-  system("cd");
-  Command::pwd(words);
+
+  std::filesystem::path a(params);
+  try {
+    if (std::filesystem::exists(a)) {
+      std::filesystem::current_path(a);
+      system("pwd");
+    }
+  } catch (std::filesystem::filesystem_error) {
+    std::cout << "Error: " << params << " is not a directory\n";
+  }
 }
 
-void ls(const vector<string> &words) {
+void unix_func(const vector<string>& words) {
+  /* executes all the functions here" https://man7.org/linux/man-pages/dir_section_2.html */
   string params = words.at(0);
   for (int i = 1; i < words.size(); ++i) {
     params += ' ' + words.at(i);

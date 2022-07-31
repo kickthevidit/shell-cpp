@@ -1,12 +1,4 @@
-/*
-TODOS:
-	- Add mkdir functionality
-	- Fix cd function
-	
-*/
-
 #include <iostream>
-#include <regex>
 #include <string>
 #include <vector>
 
@@ -17,21 +9,16 @@ using std::vector;
 
 void shell_run() {
 	system("clear");
-	
-	bool status = true;
-	string line;
 
+	string line;
 	do {
-		std::cout << "> ";
+		std::cout << " > ";
 		getline(std::cin, line);
 
-		if (line == "end") ExitShell();
-
+		if (line == "end" || line == "exit") ExitShell();
 		vector<vector<string>> args = ParseLine(line);
-
 		ExecuteArgs(args);
-
-	} while (status);
+	} while (true);
 }
 
 int main() {

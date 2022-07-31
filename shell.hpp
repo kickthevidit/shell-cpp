@@ -69,35 +69,19 @@ const map<const string, std::function<void(const vector<string> &)>> func = {
     {"echo", &Command::echo}, 
 	{"help", &Command::help},
 	{"clear", &Command::clear},
-	{"pwd", &Command::pwd},
 	{"exit", &Command::exit},
 	{"cd", &Command::cd},
-	{"ls", &Command::ls}
+	{"unix-func", &Command::unix_func}
+
 };
 
 void ExecuteArgs(const vector<vector<string>>& args) {
 	if (args.empty() || args[0].empty()) throw std::runtime_error("ExecuteArgs-> args is invalid");
-
-	/* std::cout << args.size() << '\n';
-	std::cout << "Executing Args: ";
-	for (const vector<string>& v: args) {
-		std::cout << v.size() << ':';
-		for (const string& a: v) {
-			std::cout << a << ',';
-		}
-		std::cout << '\n';
-	} */
 	
 	for (const vector<string>& command: args) {
 		if (args.at(0).empty()) throw std::runtime_error("ExecuteArgs-> initial string is empty");
 
-		void (*func1)(const vector<string>&);
-		if (func.find(command.at(0)) == func.end()) {
-            ThrowError(command.at(0));
-			break;
-        }
-
-		auto x = func.at(command.at(0));
+		auto x = (func.find(command.at(0)) == func.end()) ? func.at("unix-func") : func.at(command.at(0));
 		x(command);
 	}
 }
